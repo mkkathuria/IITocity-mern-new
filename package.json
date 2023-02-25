@@ -1,0 +1,14 @@
+{
+  "name": "iitocity-backend",
+  "version": "1.0.0",
+  "description": "iitocity backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server"
+  },
+  "author": "Mukul Kathuria",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
