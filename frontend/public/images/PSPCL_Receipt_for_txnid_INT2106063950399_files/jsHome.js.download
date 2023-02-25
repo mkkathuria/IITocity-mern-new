@@ -1,0 +1,426 @@
+﻿function showCompleteBill(ths) {
+    // create a form element ans set attributes
+    var getForm = document.createElement('form');
+    getForm.setAttribute('id', 'GetForm');
+    getForm.setAttribute('name', 'GetForm');
+    getForm.setAttribute('method', 'post');
+    getForm.setAttribute('target', 'newWindow');
+    getForm.setAttribute('action', 'pgBillPay.aspx?uc=ViewBillDetail_NewFormat');
+    // create hidden element for account number and append in form
+    var hdnAcno = document.createElement('input');
+    hdnAcno.setAttribute('type', 'hidden');
+    hdnAcno.setAttribute('name', 'billViewAcno');
+    hdnAcno.setAttribute('value', ths.id.split('.')[1]);
+    getForm.appendChild(hdnAcno);
+    // create hidden element for duedatecash and append in form
+    var hdnDuedt = document.createElement('input');
+    hdnDuedt.setAttribute('type', 'hidden');
+    hdnDuedt.setAttribute('name', 'billViewDueDateCash');
+    hdnDuedt.setAttribute('value', ths.id.split('.')[2]);
+    getForm.appendChild(hdnDuedt);
+    // create hidden element for table name and append in form
+    var hdnTname = document.createElement('input');
+    hdnTname.setAttribute('type', 'hidden');
+    hdnTname.setAttribute('name', 'billViewTblName');
+    hdnTname.setAttribute('value', ths.id.split('.')[3]);
+    getForm.appendChild(hdnTname);
+    // create hidden element for table name and append in form
+    var hdnBilissdt = document.createElement('input');
+    hdnBilissdt.setAttribute('type', 'hidden');
+    hdnBilissdt.setAttribute('name', 'billViewBillIssueDate');
+    hdnBilissdt.setAttribute('value', ths.id.split('.')[4]);
+    getForm.appendChild(hdnBilissdt);
+    // create hidden element for table name and append in form
+    var hdnBilcat = document.createElement('input');
+    hdnBilcat.setAttribute('type', 'hidden');
+    hdnBilcat.setAttribute('name', 'billViewCategory');
+    hdnBilcat.setAttribute('value', ths.id.split('.')[5]);
+    getForm.appendChild(hdnBilcat);
+    // create hidden element for table name and append in form
+    var hdnBilno = document.createElement('input');
+    hdnBilno.setAttribute('type', 'hidden');
+    hdnBilno.setAttribute('name', 'billViewBillNumber');
+    hdnBilno.setAttribute('value', ths.id.split('.')[6]);
+    getForm.appendChild(hdnBilno);
+    
+    // set parameters so that new window will open not new TAB
+    window.open('pgBillPay.aspx?uc=ViewBillDetail_NewFormat', 'newWindow', 'resizable=yes', 'scrollbars=yes');
+    // submit the form
+    document.body.appendChild(getForm);
+    getForm.submit();
+}
+function getSelectedAmount(ths) {
+    // get current values for count and amount labels
+    var ttlCnt = parseInt(document.getElementById('lblSelectCount').innerHTML);
+    var ttlAmt = parseInt(document.getElementById('lblSelectAmt').innerHTML);
+    // clear the error message and hide it
+    $("#errorBody").html('');
+    $("#msgError").addClass('hide');
+    // if checkboc CHECK action is performed
+    if (ths.checked) {
+        // if 5 bills are already selected
+        if (ttlCnt == 5) {
+            ths.checked = false;
+            $("#errorBody").html('<b>ERROR !</b> Maximum 5 bills can be paid per transaction.');
+            $("#msgError").removeClass('hide');
+            window.scroll(0, 0);
+            return;
+        }
+        else {
+            ttlCnt += 1;
+            ttlAmt += parseInt(ths.value);
+        }
+    }
+    // if checkboc UNCHECK action is performed
+    else {
+        ttlCnt -= 1;
+        ttlAmt -= parseInt(ths.value);
+    }
+    // set the final value for count and amount labels
+    $("#lblSelectCount").html(ttlCnt);
+    $("#lblSelectAmt").html(ttlAmt);
+    // get '_' separated list of selected account numbers
+    var selectedACNO = '';
+    $('input[type=checkbox]:checked').each(function () {
+        selectedACNO += $(this).attr("id").split('_')[1] + '_';
+    });
+    // set hidden fields for selected account numbers, final count, final amount
+    $('#hdnSelectCount').val(ttlCnt);
+    $('#hdnSelectedAmt').val(ttlAmt);
+    $('#hdnSelectedDueBills').val(selectedACNO.substr(0, selectedACNO.length - 1));
+    return false;
+}
+function getAcnoToDeLink(ths) {
+    // get current values for count and amount labels
+    var ttlCnt = parseInt(document.getElementById('lblSelectedCount').innerHTML);
+    // if checkboc CHECK action is performed
+    if (ths.checked)
+        ttlCnt += 1;
+    // if checkboc UNCHECK action is performed
+    else
+        ttlCnt -= 1;
+    // get '_' separated list of selected account numbers
+    var selectedACNO = '';
+    $('input[type=checkbox]:checked').each(function () {
+        selectedACNO += $(this).attr("id").split('_')[1] + '_';
+    });
+    // set hidden fields for selected account numbers, final count
+    $("#lblSelectedCount").html(ttlCnt);
+    $('#hdnSelectedAcno').val(selectedACNO.substr(0, selectedACNO.length - 1));
+}
+function blockRightClick() {
+    var userControlList = ['ViewReceipt', 'ViewBillDetail'];
+    for (i = 0; i < userControlList.length; i++)
+        if ($('#currentLoadedUserControl').val().toUpperCase() == userControlList[i].toUpperCase()) {
+            alert('Right click is disabled for this page !');
+            return false;
+        }
+        return true;
+}
+function changeReportElementState(src) {
+    var id = src.parentNode;
+    id.className = 'button';
+}
+function registerCallback() {
+    var prm = Sys.WebForms.PageRequestManager.getInstance();
+    //prm.add_beginRequest(retainUpTab);
+    prm.add_endRequest(retainUpTab);
+}
+function retainUpTab() {
+    sliderButtonSwitchClick(document.getElementById('hdnfldUpTab').value);
+}
+function sliderButtonSwitchClick(activeTab) {
+    //var activeTab = document.getElementById('hdnfldUpTab').value;
+    var divList = document.getElementsByTagName('div');
+    var tabID = [];
+    var tabFormID = [];
+    for (i = 0; i < divList.length; i++)
+        if (divList[i].id.indexOf('tab') == 0)
+            tabID.push(divList[i]);
+        else if (divList[i].id.indexOf('formtab') == 0)
+            tabFormID.push(divList[i]);
+    for (i = 0; i < tabID.length; i++) {
+        tabID[i].className = 'sliderButton';
+        tabFormID[i].style.display = 'none';
+    }
+    tabID[activeTab].className = 'sliderButtonSelected';
+    tabFormID[activeTab].style.display = 'block';
+    document.getElementById('hdnfldUpTab').value = activeTab;
+    return;
+}
+function managePageHeight(ht1, ht2) {
+    //return;
+    if (localStorage.getItem("height") == null || localStorage.getItem("height") == ht1) {
+        document.getElementById('divContent').style.height = ht2;
+        localStorage.setItem('height', ht2);
+    }
+    else {
+        document.getElementById('divContent').style.height = ht1;
+        localStorage.setItem('height', ht1);
+    }
+    return;
+}
+function checkJavascript(page) {
+    document.getElementById('siteHeader').style.display = 'none';
+    document.getElementById('menuBar').style.display = 'none';
+    document.getElementById('siteMap').style.display = 'none';
+    document.getElementById("siteContent").style.display = "none";
+    document.getElementById('siteFooter').style.display = 'none';
+    if (page == "master") {
+        document.getElementById('siteHeader').style.display = 'block';
+        document.getElementById('menuBar').style.display = 'block';
+        document.getElementById('siteMap').style.display = 'block';
+        document.getElementById("siteContent").style.display = "block";
+        document.getElementById('siteFooter').style.display = 'block';
+    }
+    else if (page == "ViewBillDetail" || page == "ViewReceipt" || page == "ViewOutletDetail" || page == "TestPage2" || page == "UnderMaintenance") {
+        document.getElementById('siteHeader').style.display = 'block';
+        document.getElementById("siteContent").style.display = "block";
+    }
+    else if (page == "for_MoblieAPP") {
+        document.getElementById("siteContent").style.display = "block";
+    }
+}
+function validateEmail(email) {
+    var filter = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    if (filter.test(email))
+        return true;
+    else
+        return false;
+}
+function validateDelete() {
+    var hdnfldDel = document.getElementById("hdnfldDel");
+    if (hdnfldDel.value == "") {
+        showMsg("info", "Kindly, first select schedule from given list to delete.");
+        return false;
+    }
+}
+function clearEmptyRowsFromGrids() {
+    var table = document.getElementById("gvDates");
+    if (table.getElementsByTagName("tr")[1].getElementsByTagName("td")[0].innerHTML.replace(/\s/g, '') == "")
+        table.deleteRow(1);
+    var table = document.getElementById("gvEmails");
+    if (table.getElementsByTagName("tr")[1].getElementsByTagName("td")[0].innerHTML.replace(/\s/g, '') == "")
+        table.deleteRow(1);
+}
+function addRowInDateGrid() {
+    //Reference the GridView.
+    var table = document.getElementById("gvDates");
+    // delete the first empy row
+    if (table.getElementsByTagName("tr")[1].getElementsByTagName("td")[0].innerHTML.replace(/\s/g, '') == "")
+        table.deleteRow(1);
+    // get the index position to where the row inserted
+    var insertPosition = table.getElementsByTagName("tr").length - 1;
+    // create the row and decorate it
+    var row = table.insertRow(insertPosition);
+    row.style.height = "25px";
+    if (insertPosition % 2 == 0)
+        row.style.backgroundColor = "#F1F1F1";
+    //add and set value of the dtFrom
+    var e1 = document.getElementById("ddldtFrom");
+    var dtFrom = e1.options[e1.selectedIndex].value;
+    setValue(row, 0, "dtFrom", dtFrom);
+    //add and set value of the dtTo
+    var e2 = document.getElementById("ddldtTo");
+    var dtTo = e2.options[e2.selectedIndex].value;
+    setValue(row, 1, "dtTo", dtTo);
+    //add and set value of the dtSend
+    var e3 = document.getElementById("ddldtSend");
+    var dtSend = e3.options[e3.selectedIndex].value;
+    setValue(row, 2, "dtSend", dtSend);
+    // add delete button
+    setValue(row, 3, "btnDel", "<img id='imgbtngDelDate' src='Images/remove.png' alt='delete' class='imageButton' onclick='deleteGridRow(this);'>");
+    // set empty column
+    setValue(row, 4, "add", "");
+    // reset drop downs
+    e1.selectedIndex = 0;
+    e2.selectedIndex = 0;
+    e3.selectedIndex = 0;
+    return false;
+}
+function addRowInEmailGrid() {
+    var emailID = document.getElementById("txtbxEmail");
+    //showMsg("", "");
+    if (emailID.value == "") {
+        showMsg("warning", "First input a valid email address!");
+        emailID.focus();
+        return false;
+    }
+    // validate email ID
+    if (!validateEmail(emailID.value)) {
+        showMsg("error", "Kindly input a valid email address!");
+        emailID.focus();
+        return false;
+    }
+    //Reference the GridView.
+    var table = document.getElementById("gvEmails");
+    // delete the first empy row
+    if (table.getElementsByTagName("tr")[1].getElementsByTagName("td")[0].innerHTML.replace(/\s/g, '') == "")
+        table.deleteRow(1);
+    // get the index position to where the row inserted
+    var insertPosition = table.getElementsByTagName("tr").length - 1;
+    // create the row and decorate it
+    var row = table.insertRow(insertPosition);
+    row.style.height = "25px";
+    if (insertPosition % 2 == 0)
+        row.style.backgroundColor = "#F1F1F1";
+    //add and set value of the email
+    var email = emailID.value;
+    setValue(row, 0, "email", email);
+    // add delete button
+    setValue(row, 1, "btnDel", "<img id='imgbtngDelDate' src='Images/remove.png' alt='delete' class='imageButton' onclick='deleteGridRow(this);'>");
+    // set empty column
+    setValue(row, 2, "add", "");
+    // clear textbox
+    emailID.value = "";
+    emailID.focus();
+    return false;
+}
+function setValue(row, index, name, strValue) {
+    var cell = row.insertCell(index);
+    cell.innerHTML = (strValue == "99") ? "LAST DAY" : strValue;
+    cell.style.fontSize = "15px";
+    cell.style.color = "#005271";
+    //Create and add a Hidden Field to send value to server.
+    var input = document.createElement("input");
+    input.type = "hidden";
+    input.name = name;
+    input.value = (strValue.indexOf("<img") > -1) ? "" : strValue;
+    cell.appendChild(input);
+}
+function validateGrids() {
+    clearEmptyRowsFromGrids();
+    var tblDates = document.getElementById("gvDates");
+    var tblEmails = document.getElementById("gvEmails");
+    var len = tblDates.getElementsByTagName("tr").length;
+    if (tblDates.getElementsByTagName("tr").length <= 2) {
+        showMsg("error", "Kindly input a valid schedule !");
+        return false;
+    }
+    if (tblEmails.getElementsByTagName("tr").length <= 2) {
+        showMsg("error", "Kindly input a valid email address !");
+        return false;
+    }
+    createHiddenField(tblDates);
+    createHiddenField(tblEmails);
+    return true;
+}
+function createHiddenField(table) {
+    var rowCount = table.getElementsByTagName('tr').length;
+    for (i = 1; i < rowCount - 1; i++) {
+        var row = table.getElementsByTagName('tr')[i];
+        var colCount = row.getElementsByTagName('td').length;
+        for (j = 0; j < colCount; j++) {
+            var col = row.getElementsByTagName('td')[j];
+            var span = col.getElementsByTagName('span')[0];
+            if (span) {
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = col.getElementsByTagName('span')[0].id;
+                input.value = (span.innerHTML == "LAST DAY") ? "99" : span.innerHTML;
+                col.appendChild(input);
+            }
+        }
+    }
+}
+function deleteGridRow(id) {
+    // get selected row ID
+    var row = id.parentNode.parentNode;
+    // get row's parent table
+    var table = row.parentNode.parentNode;
+    // get row's index in parent table
+    var rowIndex = row.rowIndex;
+    // delete row
+    table.deleteRow(rowIndex);
+    // get total number of rows
+    var rowCount = table.getElementsByTagName("tr").length;
+    // re-decorate rows background
+    for (i = 1; i < rowCount - 1; i++) {
+        var row = table.getElementsByTagName('tr')[i];
+        row.style.backgroundColor = (i % 2 == 0) ? "#F1F1F1" : "#FFF";
+    }
+    return true;
+}
+function updateStatus(status) {
+    localStorage.setItem("saved", status);
+}
+function showMsg(msgType, msg) {
+    var lblError = document.getElementById("lblErrorMsg");
+    lblError.innerHTML = msgType.toUpperCase() + ": " + msg;
+    switch (msgType.toUpperCase()) {
+        case "INFO":
+            lblError.className = "msg_Info";
+            break;
+        case "SUCCESS":
+            lblError.className = "msg_Success";
+            break;
+        case "WARNING":
+            lblError.className = "msg_Warning";
+            break;
+        case "ERROR":
+            lblError.className = "msg_Error";
+            break;
+        default:
+            lblError.className = "msg_None";
+            lblError.innerHTML = "";
+            break;
+    }
+}
+function onChangeAccountNo()
+{
+    document.getElementById("lblErrorMsg").innerHTML = '';
+}
+function onCheckBoxMoblieEmail() {
+    if (document.getElementById("chkbxMobEmail").checked) {
+        document.getElementById("txtbxMbNo").disabled = false;
+        document.getElementById("txtbxEmail").disabled = false;
+    }
+    else {
+        document.getElementById("txtbxMbNo").disabled = true;
+        document.getElementById("txtbxEmail").disabled = true;
+    }
+    return;
+}
+function validatePayNowProcess() {
+
+}
+function validateAddBillProcess() {
+    showMsg("", "");
+    var acno = document.getElementById("txtbxAcno");
+    // check if blank account number is added, if yes then block it from payment process
+    if (acno.value == "") {
+        showMsg("Error", "blank account number cannot be accepted !");
+        acno.focus();
+        return false;
+    }
+    // check if ACNO has invalid characters or wrong length, if yes then block it from payment process
+    var forNonSAP = acno.value.replace(/[^a-z0-9]/i, "");
+    var forSAP = acno.value.replace(/[^0-9]/i, "");
+//    if ((acno.value.length != 10 && acno.value.length != 12) ||
+//        (acno.value.length == 10 && acno.value.length > forSAP.length) ||
+//        (acno.value.length == 12 && acno.value.length > forNonSAP.length)) {
+//        showMsg("Error", "invalid account number !");
+//        acno.focus();
+//        return false;
+//    }
+}
+function PrintReceipt(mode, txnid, acno) {
+    var printWindow = window.open('pgReceiptPrint.aspx?mode=' + mode + '&txnid=' + txnid + '&acno=' + acno + '', '_blank', 'height=600,width=950');
+    setTimeout(function () {
+        printWindow.print();
+    }, 1000);
+    return false;
+}
+function DownloadReceipt(id) {
+    var source = document.getElementById(id);
+    var form = document.createElement("form");
+    form.setAttribute("method", "POST");
+    form.setAttribute("action", "pgReceiptDownload.aspx");
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "hs");
+    hiddenField.setAttribute("value", source.innerHTML);
+    form.appendChild(hiddenField);
+    document.body.appendChild(form);
+    form.submit();
+}

@@ -1,0 +1,95 @@
+﻿/* Note: Try to remove the following lines to see the effect of CSS positioning */
+  .affix {
+      top: 0;
+      width: 100%;
+      z-index:10;
+  }
+  .affix + .container-fluid {
+      padding-top: 55px;
+  }
+/* Remove the navbar's default margin-bottom and rounded borders */
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+    font-size:12px;
+    font-family:Source Sans Pro,SansSerif,Helvetica,Arial;
+}
+.navbar-default .navbar-nav > li
+{
+    border-bottom:1px solid transparent;
+}
+.navbar-default .navbar-nav > li:hover
+{
+    border-bottom:1px solid #FB6400;
+    background-color: #E7E7E7;
+}
+.navbar-default .navbar-nav > li:hover .glyphicon
+{
+}
+.navbar-default .navbar-nav > li > a,
+.navbar-default .navbar-nav > li > ul > li > a  {
+    color: #005271;
+    border-bottom:1px solid transparent;
+    font-size:11px;
+    font-family:Source Sans Pro,SansSerif,Helvetica,Arial;
+    padding:15px 8px 15px 8px;
+}
+.navbar-default .navbar-nav > li > ul > li > a:hover,
+.navbar-default .navbar-nav > li > ul > li > a:focus
+{
+    color: #005271;
+    background-color: #F8F8F8;
+    border-bottom:1px solid #FB6400;
+}
+.navbar-default .navbar-nav > li > a:hover, 
+.navbar-default .navbar-nav > li > a:focus, 
+.navbar-default .navbar-nav > .open > a, 
+.navbar-default .navbar-nav > .open > a:hover, 
+.navbar-default .navbar-nav > .open > a:focus
+{
+    color: #005271;
+    background-color: #E7E7E7;
+}
+
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret, 
+.navbar-default .navbar-nav > .open > a .caret, 
+.navbar-default .navbar-nav > .open > a:hover .caret, 
+.navbar-default .navbar-nav > .open > a:focus .caret {
+    border-top-color: #FB6400;
+    border-bottom-color: #FB6400;
+}
+.navbar-default .navbar-nav .dropdown:hover .dropdown-menu
+{
+    padding:0px;
+    margin-top:1px;
+    display: block;
+    background-color: #E7E7E7;
+    border-width:0px;
+    font-size:12px;
+    font-family:Source Sans Pro,SansSerif,Helvetica,Arial;
+    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.2);
+}
+.navbar-default .navbar-nav .dropdown:hover > ul > li > a
+{
+    padding-top:13px;
+    padding-bottom:13px;
+}
+.navbar-default .navbar-nav > li > a:hover .glyphicon,
+.navbar-default .navbar-nav > li:hover > .dropdown > a > .glyphicon,
+.navbar-default .navbar-nav > li > ul > li > a:hover .glyphicon {
+    color: #FB6400;
+}
+.navbar-default .navbar-toggle {
+    border-color: #005271;
+}
+.navbar-default .navbar-toggle:hover{
+    border-color: #FB6400;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: transparent;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #005271;
+}
