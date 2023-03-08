@@ -18,7 +18,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const ProductScreen = ({ match }) => {
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
