@@ -7,10 +7,11 @@ import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 import CartScreen from "./screens/CartScreen";
 import LoginScreen from "./screens/LoginScreen";
+import history from "./history";
 
 const App = () => {
   return (
-    <Router>
+    <Router history={history}>
       <Header />
       <main className="py-3">
         <Container>
