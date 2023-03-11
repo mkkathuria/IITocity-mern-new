@@ -11,33 +11,35 @@ import {
   Card,
 } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Message from "../components/Message";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 
-const CartScreen = ({ match, location, history }) => {
+const CartScreen = () => {
   const { id } = useParams();
 
-  const [searchParams, setSearchParams] = useSearchParams("");
+  const [searchParams] = useSearchParams("");
   const qty = Number(searchParams.toString().split("=")[1]);
 
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
       dispatch(addToCart(id, qty));
     }
-  }, [dispatch, id, qty]);
+  }, [dispatch, id, qty, navigate]);
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
 
   const checkoutHandler = () => {
-    history.push("/login?redirect=shipping");
+    navigate("/login?redirect=shipping");
   };
 
   return (

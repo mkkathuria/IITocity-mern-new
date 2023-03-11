@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import history from "../history";
+import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -14,7 +14,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
 
@@ -23,9 +23,9 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (userInfo) {
-      history.push(redirect);
+      navigate(redirect);
     }
-  }, [userInfo, redirect]);
+  }, [userInfo, redirect, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();

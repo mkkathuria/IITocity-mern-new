@@ -10,6 +10,7 @@ import LoginScreen from "./screens/LoginScreen";
 import history from "./history";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import ShippingScreen from "./screens/ShippingScreen";
 
 const App = () => {
   return (
@@ -18,6 +19,10 @@ const App = () => {
       <main className="py-3">
         <Container>
           <Routes>
+            <Route
+              path="/login/shipping"
+              element={<ShippingScreen></ShippingScreen>}
+            />
             <Route path="/login" element={<LoginScreen></LoginScreen>} />
             <Route
               path="/register"

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import FormContainer from "../components/FormContainer";
-import history from "../history";
+import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { register } from "../actions/userActions";
 
@@ -22,12 +22,13 @@ const RegisterScreen = () => {
   const { loading, error, userInfo } = userRegister;
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (userInfo) {
-      history.push(redirect);
+      navigate(redirect);
     }
-  }, [userInfo, redirect]);
+  }, [userInfo, redirect, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();

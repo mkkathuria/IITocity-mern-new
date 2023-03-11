@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
+import { useNavigate } from "react-router-dom";
 
-const ProfileScreen = ({ location, history }) => {
+const ProfileScreen = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +14,8 @@ const ProfileScreen = ({ location, history }) => {
   const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
@@ -25,7 +28,7 @@ const ProfileScreen = ({ location, history }) => {
 
   useEffect(() => {
     if (!userInfo) {
-      history.push("/login");
+      navigate("/login");
     } else {
       if (!user.name) {
         dispatch(getUserDetails("profile"));
@@ -34,7 +37,7 @@ const ProfileScreen = ({ location, history }) => {
         setEmail(user.email);
       }
     }
-  }, [dispatch, history, userInfo, user]);
+  }, [dispatch, userInfo, user, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
