@@ -1,0 +1,73 @@
+﻿html, body{height:100%;}
+/* Remove the jumbotron's default bottom margin */
+#noJS
+{
+    padding: 30px 0px;
+    width: 100%;
+    background-color: #F0F0F0;
+    color: Red;
+    font-size: 30px;
+    font-variant: small-caps;
+    font-family: Lucida Sans Unicode;
+    text-align: center;
+}
+#siteContainer{display:none;}
+.jumbotron
+{
+    margin-bottom: 0;
+    background-color: #EEE;
+}    
+.jumbotron.hidden-xs
+{
+    padding-top: 7px;
+    padding-bottom: 7px;
+}    
+.jumbotron.visible-xs
+{
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+.siteTitle
+{
+    color: #005271;
+    font-variant: small-caps;
+    font-family: Arial, Verdana, sans-serif;
+    font-size: 18px;
+    text-shadow: 0px 1px 1px rgba(0,0,0,0.3);
+    }
+.siteSubTitle
+{
+    color: #005271;
+    font-size:12px;
+    font-family:Source Sans Pro,SansSerif,Helvetica,Arial;
+ }
+/*.siteSubTitle:hover{color:#FB6400;}*/
+.orange{color:#FB6400;}
+.blue{color:#005271;}
+.show{display:block;}
+.hide{display:none;}
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.row.content {height: 1300px}
+/* Set gray background color and 100% height */
+.sidenav {
+    padding:20px;
+    background-color: #EEE;
+    height: 100% !important;
+    }
+/* Set black background color, white text and some padding */
+footer
+{
+    background-color: #005271;
+    color: #DDD;
+    font-size:11px;
+    min-height:100px;
+}
+/* For small screens */
+@media screen and (max-width: 767px) 
+{
+    .sidenav {
+        height: auto;
+        padding: 15px;
+    }
+    .row.content {height:auto;}
+}

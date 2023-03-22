@@ -1,0 +1,164 @@
+﻿.sitemap
+{
+    margin: 0px -15px;
+    border-bottom: 1px solid #EEE;
+    background-color: #FAFAFA;
+    padding: 2px 0px 1px 2px;
+    text-align: left;
+    font-weight: normal;
+    font-size: 11px;
+    color: #999;
+    font-family: Tahoma;
+}
+.colorSuccess
+{
+    background-color: #5CB860;
+}
+.colorSuccessLight
+{
+    background-color: #9AD39D;
+}
+.colorWarning
+{
+    background-color: #FFA21A;
+}
+.colorWarningLight
+{
+    background-color: #FFB74A;
+}
+.colorError
+{
+    background-color: #F55A4E;
+}
+.colorErrorLight
+{
+    background-color: #F88981;
+}
+.colorInfo
+{
+    background-color: #00D3EE;
+}
+.colorInfoLight
+{
+    background-color: #84C0FD;
+    background-color: #7BB8FB;
+}
+.colorViolet
+{
+    background-color: #9D36B3;
+}
+.colorVioletLight
+{
+    background-color: #B87CDC;
+}
+.colorGrey
+{
+    background-color: #AAA;
+}
+.colorGreyLight
+{
+    background-color: #C5C5C5;
+    background-color: #F3F3F3;
+}
+.colorWhite
+{
+    background-color: #FCFCFC;
+}
+.colorDarkBlue{color:#005271;}
+.fullwidth{width:100% !important;}
+.text_deco_none,.text_deco_none:hover,.text_deco_none:focus{text-decoration:none;}
+.cell_padding{padding:3px 3px;}
+
+#divMsgBox div
+{
+    color: #FCFCFC;
+    box-shadow: 0px 0px 17px 0px #DDD;
+}
+#divShowBillDetails table, #divShowReceipt table, #divWellShowReceipt table, #divWellShowBillHistory table
+{
+    background-color:#FEFEFE;
+    color:#005271;
+    font-size:11px;
+}
+#divShowBillDetails th, #divShowReceipt th
+{
+    width:50%;
+    padding:7px;
+}
+#divWellShowBillHistory th, #divWellShowReceipt th{text-align:center;}
+
+/* ID used to display the due bill short details in dashboard*/
+#tblDueBills, #tblLinkedAcno, #gvBillHistory, #gvPaymentReceipt, #gvPaymentHistory{font-size:11px;}
+#tblDueBills th, #tblLinkedAcno th, #gvBillHistory th, #gvPaymentReceipt th, #gvPaymentHistory th {text-align:center;}
+#pnlSelectAcno, #pnlDeLinkAcno, #pnlBillHistory, #pnlPaymentReceipt, #pnlPaymentHistory{max-height:250px;}
+
+/* BILL : START */
+#viewBillTable
+{
+    background-color: #FEFEFE;
+    border-color: #003E55;
+    color: #003E55;
+    font-size: 9px;
+    font-family: Arial;
+    font-weight: 500;
+    padding: 0px 5px;
+    box-shadow: 0px 0px 0px 0px #AAA;
+}
+#viewBillTable .common
+{
+    height:100%;
+    width:100%;
+    border-collapse:collapse;
+    border:1px solid #003E55;
+}
+#viewBillTable th, #viewBillTable td
+{
+    padding:0px;
+    border-width:0px;
+    border-collapse:collapse;
+}
+#zero td, #one td,  #two_1 td, #two_2 td, #two_3 td, #three td, #four td,  #four_1 td, #four_2 td, #five td, #six_1 td, #six_2 td, #seven td, #eight td, #nine td
+{
+    margin:0px;
+    padding:2px;
+}
+#two_2 td, #three td, #four td, #five td,#four_1 td, #four_2 td, #six_1 td, #six_2 td, #seven td, #eight td, #nine td
+{
+    border:1px solid #003E55;
+}
+#viewBillTable td
+{
+    margin:0px;
+    padding:1px 1px 1px 1px;
+    border-collapse:collapse;
+    border:1px solid #003E55;
+}
+
+
+#viewBillTable .table0
+{
+    border-width:0px;
+    margin-bottom:-5px;
+    height:100%;
+    width:100%;
+    text-align:center;
+    vertical-align:text-bottom;
+}
+#viewBillTable .table6
+{
+    border-width:0px;
+    margin-bottom:-10px;
+    height:100%;
+    width:100%;
+    text-align:center;
+    vertical-align:text-top;
+}
+#viewBillTable .left
+{
+    text-align:left;
+}
+#viewBillTable .center
+{
+    text-align:center;
+}
+/* BILL : END */
