@@ -20,6 +20,7 @@ import {
 import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Meta from "../components/Meta";
 
 const ProductScreen = ({ match }) => {
   const [qty, setQty] = useState(1);
@@ -65,6 +66,7 @@ const ProductScreen = ({ match }) => {
   };
   return (
     <>
+      <Meta title={product.name} />
       <Link className="btn btn-light my-3" to="/">
         Go Back
       </Link>
